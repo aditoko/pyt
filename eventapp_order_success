@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Transaksi Berhasil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+        background: #F7F7F7;
+    }
+    </style>
+</head>
+
+<body bgcolor="#f9f9f9" style="font-family:'Open Sans', sans-serif;">
+    <table align="center" bgcolor="#fff" border="0" cellpadding="0" cellspacing="0" style="margin:5% auto; width: 100%; max-width: 600px;">
+        <!-- This is Header -->
+        <tr>
+            <td>
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#2fbe38" style="padding:10px 15px;font-size:14px;">
+                    <tr>
+                        <td width="60%" align="left" style="padding:5px 0 0;">
+                            <img src="https://ecs7.tokopedia.net/microsite-production/ciptakan-peluangmu/img/tokopedia-logo.png" alt="Logo Tokopedia" width="130" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- end of Header -->
+        
+        {{ range $idx := .NotifiedOrderData.AllItems }}
+            {{ $metadata := .EntityItem.meta_data }}
+            <tr>
+                <td>
+                <img style="width: 100%;" src="{{ $metadata.entity_image }}">
+                </td>
+            </tr>
+
+            <!-- This is Content  -->
+            <tr>
+                <td style="padding: 25px 15px 10px;">
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <h1 style="margin: 0; font-size: 16px; font-weight: bold; line-height: 24px; color: rgba(0, 0, 0, 0.70);">Hai {{ $.FullName }},</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p style="margin: 0; font-size: 15px; line-height: 24px; color: rgba(0, 0, 0, 0.70);">
+                                    Terima kasih telah membeli tiket <span style="color:#42B549;text-decoration:none;">{{ $metadata.entity_product_name }}</span> melalui tokopedia.
+                                    Pesananmu telah berhasil dikonfirmasi. Silakan cek <span style="font-style: italic;">e-ticket</span> yang terlampir dibawah ini.
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 25px 15px 10px;">
+                    <table width="100%" style="margin: 15px 0; color: rgba(0, 0, 0, 0.70); font-size: 14px; border-collapse: collapse;">
+                        <tbody>
+                            <tr>
+                                <td colspan="2">
+                                    <h1 style="margin: 0; font-size: 16px; font-weight: bold; line-height: 24px; color: rgba(0, 0, 0, 0.70);">
+                                        Keterangan Event
+                                    </h1>			
+                                </td>
+                            </tr>
+
+                            {{ if $metadata.entity_packages }}
+                                {{ $entityPackage := index $metadata.entity_packages 0 }}
+                                <tr>
+                                    <td style="border-top: 1px solid rgba(0, 0, 0, 0.12); border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0;" width="40%">Nama</td>
+                                    <td style="border-top: 1px solid rgba(0, 0, 0, 0.12); border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0;" width="60%">{{ $entityPackage.display_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid rgba(0, 0, 0, 0.12); border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0;" width="40%">Jumlah</td>
+                                    <td style="border-top: 1px solid rgba(0, 0, 0, 0.12); border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0;" width="60%">{{ $entityPackage.quantity }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid rgba(0, 0, 0, 0.12); border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0;" width="40%">Harga</td>
+                                    <td style="border-top: 1px solid rgba(0, 0, 0, 0.12); border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0;" width="60%">{{ $entityPackage.base_price }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        &nbsp;			
+                                    </td>
+                                </tr>
+                            {{ end }}
+                            
+                            
+                            {{if $metadata.entity_passengers }}
+                                <tr>
+                                    <td colspan="2">
+                                        <h1 style="margin: 0; font-size: 16px; font-weight: bold; line-height: 24px; color: rgba(0, 0, 0, 0.70);">
+                                            Data Pelanggan
+                                        </h1>			
+                                    </td>
+                                </tr>
+                                
+                                {{ range $i, $p := $metadata.entity_passengers }}
+                                <tr>
+                                    <td style="border-top: 1px solid rgba(0, 0, 0, 0.12); border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0;" width="40%">{{ .title }}</td>
+                                    <td style="border-top: 1px solid rgba(0, 0, 0, 0.12); border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0;" width="60%">{{ .value }}</td>
+                                </tr>
+                                {{ end }}
+                            {{ end }}
+
+                            <tr>
+                                <td colspan="2" style="color: #4F4F4F;font-size: 12px; text-align: center;">
+                                    <a href="https://www.tokopedia.com/bantuan/syarat-dan-ketentuan-pembelian-tiket-event/" style="color:#42B549; text-decoration:none; font-size: 14px;">Lihat Syarat & Ketentuan Event</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <table width="100%" style="margin: 15px 0; color: rgba(0, 0, 0, 0.70); font-size: 16px;">
+                        <tr>
+                            <td style="padding: 15px 0 10px; color: rgba(0, 0, 0, 0.70); font-size: 14px;" align="center">
+                            <div style="margin-bottom: 5px">Bayar berbagai macam tagihan jadi mudah.</div>
+                            <div>Manfaatkan fitur Langganan!</div>
+                        </td>
+                        </tr>
+                    </table>
+
+                    <!-- Icons of Digital Products -->
+                    <div style="background: #FBFBFB; margin-bottom: 30px; padding: 10px; border: 1px dashed #E1E1E1;">
+
+                        <table width="100%;" cellpadding="3px;" style="border-collapse: collapse;">
+                            <tbody style="vertical-align:text-top">
+                                <tr>
+                                    <td style="width:25%; text-align: center; padding-top: 5px; padding-bottom: 5px; border-right: 1px dashed #E1E1E1; border-bottom: 1px dashed #E1E1E1;">
+                                        <a href="https://pulsa.tokopedia.com/subscribe/add" style="text-decoration:none; display: block;" target="_blank">
+                                            <img src="https://ecs7.tokopedia.net/img/recharge/icon/pulsa.png" style="max-width: 45px;width:100%;">
+                                            <div style="color:#666666;font-size:12px;overflow:hidden;">
+                                                Pulsa
+                                            </div>
+                                        </a>
+                                    </td>
+
+                                    <td style="width:25%; text-align: center; padding-top: 5px; padding-bottom: 5px; border-right: 1px dashed #E1E1E1; border-bottom: 1px dashed #E1E1E1;">
+                                        <a href="https://pulsa.tokopedia.com/subscribe/add" style="text-decoration:none; display: block;" target="_blank">
+                                            <img src="https://ecs7.tokopedia.net/img/recharge/icon/paket-data.png" style="max-width: 45px;width:100%;">
+                                            <div style="color:#666666;font-size:12px;overflow:hidden;">
+                                                Paket Data
+                                            </div>
+                                        </a>
+                                    </td>
+
+                                    <td style="width:25%; text-align: center; padding-top: 5px; padding-bottom: 5px; border-right: 1px dashed #E1E1E1; border-bottom: 1px dashed #E1E1E1;">
+                                        <a href="https://pulsa.tokopedia.com/subscribe/add" style="text-decoration:none; display: block;" target="_blank">
+                                            <img src="https://ecs7.tokopedia.net/img/recharge/icon/listrik-pln.png" style="max-width: 45px;width:100%;">
+                                            <div style="color:#666666;font-size:12px;overflow:hidden;">
+                                                Listrik PLN
+                                            </div>
+                                        </a>
+                                    </td>
+
+                                    <td style="width:25%; text-align: center; padding-top: 5px; padding-bottom: 5px; border-bottom: 1px dashed #E1E1E1;">
+                                        <a href="https://pulsa.tokopedia.com/subscribe/add" style="text-decoration:none; display: block;" target="_blank">
+                                            <img src="https://ecs7.tokopedia.net/img/recharge/icon/bpjs.png" style="max-width: 45px;width:100%;">
+                                            <div style="color:#666666;font-size:12px;overflow:hidden;">
+                                                BPJS
+                                            </div>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width:25%; text-align: center; padding-top: 5px; padding-bottom: 5px; border-right: 1px dashed #E1E1E1;">
+                                        <a href="https://pulsa.tokopedia.com/subscribe/add" style="text-decoration:none; display: block;" target="_blank">
+                                            <img src="https://ecs7.tokopedia.net/img/recharge/icon/tv-kabel.png" style="max-width: 45px;width:100%;">
+                                            <div style="color:#666666;font-size:12px;overflow:hidden;">
+                                                TV Kabel
+                                            </div>
+                                        </a>
+                                    </td>
+
+                                    <td style="width:25%; text-align: center; padding-top: 5px; padding-bottom: 5px; border-right: 1px dashed #E1E1E1;">
+                                        <a href="https://pulsa.tokopedia.com/subscribe/add" style="text-decoration:none; display: block;" target="_blank">
+                                            <img src="https://ecs7.tokopedia.net/img/recharge/icon/voucher-game.png" style="max-width: 45px;width:100%;">
+                                            <div style="color:#666666;font-size:12px;overflow:hidden;">
+                                                Voucher Game
+                                            </div>
+                                        </a>
+                                    </td>
+
+                                    <td style="width:25%; text-align: center; padding-top: 5px; padding-bottom: 5px; border-right: 1px dashed #E1E1E1;">
+                                        <a href="https://pulsa.tokopedia.com/subscribe/add" style="text-decoration:none; display: block;" target="_blank">
+                                            <img src="https://ecs7.tokopedia.net/img/recharge/icon/air-pdam.png" style="max-width: 45px;width:100%;">
+                                            <div style="color:#666666;font-size:12px;overflow:hidden;">
+                                                Air PDAM
+                                            </div>
+                                        </a>
+                                    </td>
+
+                                    <td style="width:25%; text-align: center; padding-top: 5px; padding-bottom: 5px; border-right: 0px dashed #E1E1E1;">
+                                        <a href="https://pulsa.tokopedia.com/subscribe/add" style="text-decoration:none; display: block;" target="_blank">
+                                            <img src="https://ecs7.tokopedia.net/img/recharge/icon/pascabayar.png" style="max-width: 45px;width:100%;">
+                                            <div style="color:#666666;font-size:12px;overflow:hidden;">
+                                                Pascabayar
+                                            </div>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end Icons of Digital Products -->
+
+                    <div style="text-align: center;">
+                        <div style="text-align: left; font-size: 13px; margin: 30px 0 10px; color: #999999;">
+                            Email ini dibuat secara otomatis. Mohon tidak mengirimkan balasan ke email ini.
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            <!-- end of Content -->
+        {{ end }}
+
+        <!-- This is Attention Section -->
+        <tr>
+            <td style="padding: 10px 15px 0">
+                <table width="100%">
+                    <tr>
+                        <td bgcolor="#fbe3e4" style="border-top: 3px solid #f9bcbe; border-bottom: 3px solid #f9bcbe; padding: 0;">
+                            <p style="margin: 0; font-size: 13px; line-height: 18px; padding: 10px 15px;">
+                                Hati-hati terhadap pihak yang mengaku dari Tokopedia, membagikan voucher belanja, atau meminta data pribadi. Tokopedia tidak pernah meminta password dan data pribadi melalui email, pesan pribadi, maupun channel lainnya. Untuk semua email dengan link dari Tokopedia, pastikan alamat URL di browser sudah di alamat
+                                <a href="http://www.tokopedia.com" style="text-decoration: none; color: #42B549;" target="_blank">tokopedia.com</a> bukan alamat lainnya. Jaga keamanan akun Anda, baca panduannya di <a href="https://blog.tokopedia.com/2015/08/panduan-keamanan-tokopedia/" style="text-decoration: none; color: #42B549;" target="_blank">sini</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- end of Attention Section -->
+
+         <!--This is Footer-->
+        <tr>
+            <td bgcolor="#FFFFFF" style="padding:20px 15px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse; font-size:13px;">
+                    <tr>
+                        <td>
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse; ">
+                                <tr>
+                                    <td width="280" align="left">
+                                        <table border="0" style="border-collapse:collapse; margin-top:10px">
+                                            <tr>
+                                                <td style="font-size:13px;color:#999999;margin-bottom:10px;">Download Aplikasi Tokopedia
+                                                    <br>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:2px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
+                                                        <tr>
+                                                            <td>
+                                                                <a href="http://app.appsflyer.com/com.tokopedia.tkpd?pid=Gmail_Sponsored_Promotion&c=Email" style="padding: 0 5px 0 0;"><img src="https://s3.amazonaws.com/www.betaoutcdn.com/205872016/07/1468233846.png" alt="Appstore" height="44"></a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="http://app.appsflyer.com/com.tokopedia.tkpd?pid=Gmail_Sponsored_Promotion&c=Email" style="padding: 0 5px;"><img src="https://s3.amazonaws.com/www.betaoutcdn.com/205872016/07/1468233889.png" alt="Playstore" height="44"></a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td width="280" align="right">
+                                        <table border="0" style="border-collapse:collapse; margin-top:10px">
+                                            <tr>
+                                                <td style="font-size:13px;color:#999999;margin-bottom:10px;" align="right">Ikuti Kami</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:2px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
+                                                        <tr>
+                                                            <td>
+                                                                <a href="http://eoaclk.com/o3dtmgQm2u/" style="padding: 0 5px;"><img src="https://s3.amazonaws.com/www.betaoutcdn.com/300452016/11/1480307802.png" alt="Google plus" height="44"></a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="http://eoaclk.com/Ow382vvrBi/" style="padding: 0 5px;"><img src="https://s3.amazonaws.com/www.betaoutcdn.com/300452016/11/1480307762.png" alt="Facebook" height="44"></a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="http://eoaclk.com/W1zNWwgVGs" style="padding: 0 5px;"><img src="https://s3.amazonaws.com/www.betaoutcdn.com/300452016/11/1480307869.png" alt="Twitter" height="44"></a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="http://eoaclk.com/B0yewkotPn" style="padding: 0 0 0 5px;"><img src="https://s3.amazonaws.com/www.betaoutcdn.com/300452016/11/1480307832.png" alt="Instagram" height="44"></a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!--end of Footer-->
+        
+        <!-- anti-spam -->
+        <tr>
+            <td>
+                <table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse:collapse; background-color: #F7F7F7; font-size:13px; color: #999999; border-top: 1px solid #DDDDDD;">
+                    <tr>
+                        <td width="560" align="center" style="padding: 30px 20px 0;">
+                            Jika butuh bantuan, gunakan halaman
+                            <a href="https://www.tokopedia.com/contact-us" style="text-decoration: none; color: #42B549;" target="_blank">
+                                Kontak Kami
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="560" align="center" style="padding: 10px 20px 30px;">
+                            &copy; 2009-{{ .CurrentYear }}, PT Tokopedia
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- end of anti-spam -->
+    </table>
+</body>
+</html>
